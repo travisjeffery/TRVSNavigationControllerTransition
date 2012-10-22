@@ -24,7 +24,7 @@ One usage of this is when you push a view controller onto your
 UINavigationController and that view controller wants to have the
 UINavigationController's navigationBar hidden as the UINavigationController's
 view translates in without hiding the navigationBar in the current
-view.
+view. Make sure you link your binary with the QuartzCore.framework library.
 
 Here is using `pushViewController:animated:`, notice how the navigationBar
 in the current view is hidden before the transition is finished.

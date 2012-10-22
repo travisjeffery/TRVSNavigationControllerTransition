@@ -6,6 +6,7 @@
 //
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "UINavigationController+TRVSNavigationControllerTransition.h"
 
 static CALayer *kTRVSCurrentLayer = nil;
