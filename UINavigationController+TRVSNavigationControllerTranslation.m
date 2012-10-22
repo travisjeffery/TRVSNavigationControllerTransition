@@ -13,18 +13,30 @@ static CALayer *kTRVSTranslationLayer = nil;
 
 @interface TRVSNavigationControllerTranslationAnimiationDelegate : NSObject
 - (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag;
++ (TRVSNavigationControllerTranslationAnimiationDelegate *)sharedDelegate;
 @end
 
+static NSTimeInterval const kTransitionDuration = .3f;
+static TRVSNavigationControllerTranslationAnimiationDelegate *kTRVSAnimationDelegate = nil;
+
 @implementation TRVSNavigationControllerTranslationAnimiationDelegate
+
 - (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag
 {
     [kTRVSOriginalLayer removeFromSuperlayer];
     [kTRVSTranslationLayer removeFromSuperlayer];
 }
+
++ (TRVSNavigationControllerTranslationAnimiationDelegate *)sharedDelegate
+{
+    if (kTRVSAnimationDelegate == nil){
+        kTRVSAnimationDelegate = [[self alloc] init];
+    }
+    return kTRVSAnimationDelegate;
+}
+
 @end
 
-static NSTimeInterval const kTransitionDuration = .3f;
-static TRVSNavigationControllerTranslationAnimiationDelegate *kTRVSAnimationDelegate = nil;
 
 @implementation UINavigationController (TRVSNavigationControllerTranslation)
 
@@ -49,7 +61,7 @@ static TRVSNavigationControllerTranslationAnimiationDelegate *kTRVSAnimationDele
     CABasicAnimation *translationX = [CABasicAnimation animationWithKeyPath:@"transform"];
     translationX.toValue = [NSValue valueWithCATransform3D:CATransform3DTranslate(CATransform3DIdentity, -CGRectGetWidth(self.view.bounds), 0.f, 0.f)];
     translationX.duration = kTransitionDuration;
-    translationX.delegate = kTRVSAnimationDelegate;
+    translationX.delegate = [TRVSNavigationControllerTranslationAnimiationDelegate sharedDelegate];
     translationX.removedOnCompletion = NO;
     translationX.fillMode = kCAFillModeForwards;
     translationX.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
@@ -59,7 +71,7 @@ static TRVSNavigationControllerTranslationAnimiationDelegate *kTRVSAnimationDele
     translationX = [CABasicAnimation animationWithKeyPath:@"transform"];
     translationX.toValue = [NSValue valueWithCATransform3D:CATransform3DTranslate(CATransform3DIdentity, -CGRectGetWidth(self.view.bounds), 0.f, 0.f)];
     translationX.duration = kTransitionDuration;
-    translationX.delegate = kTRVSAnimationDelegate;
+    translationX.delegate = [TRVSNavigationControllerTranslationAnimiationDelegate sharedDelegate];
     translationX.removedOnCompletion = NO;
     translationX.fillMode = kCAFillModeForwards;
     translationX.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
