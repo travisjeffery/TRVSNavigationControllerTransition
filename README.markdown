@@ -26,10 +26,12 @@ UINavigationController's navigationBar hidden as the UINavigationController's
 view translates in without hiding the navigationBar in the current
 view. Make sure you link your binary with the QuartzCore.framework library.
 
-The left photo below is using `pushViewController:animated:`, notice how the navigationBar
+### Example
+
+The left photo below is using `pushViewController:animated:`, notice how the navigation bar
 in the current view is hidden before the transition is finished. The right photo is using `pushViewControllerWithNavigationControllerTransition:`, now by
 using multiple layers we can keep the navigationBar visible in the current view
-until the transition completes.
+until the transition completes. **Keep an eye on the navigation bar.**
 
 ![Bad](https://raw.github.com/travisjeffery/TRVSNavigationControllerTransition/master/Bad.gif) ![Good](https://raw.github.com/travisjeffery/TRVSNavigationControllerTransition/master/Good.gif)
 
