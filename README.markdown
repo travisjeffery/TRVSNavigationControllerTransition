@@ -1,3 +1,41 @@
 # UINavigationController+TRVSNavigationControllerTranslation Category
 
-## Author: Travis Jeffery [@travisjeffery on Twitter](http://twitter.com/travisjeffery)/[@travisjeffery on GitHub](http://github.com/travisjeffery)
+<hr />
+
+This category provides two methods on UINavigationControllers to push and pop
+view controllers with an animated translation of the entire UINavigationController's view, rather just the view controller's.
+
+## Author: Travis Jeffery 
+
+- [@travisjeffery on Twitter](http://twitter.com/travisjeffery)
+- [@travisjeffery on GitHub](http://github.com/travisjeffery)
+- travisjeffery@gmail.com
+
+### API
+
+``` objective-c 
+- (void)pushViewControllerWithNavigationControllerTranslation:(UIViewController *)viewController;
+- (void)popViewControllerWithNavigationControllerTranslation;
+```
+
+### Usages
+
+One usage of this is when you push a view controller onto your
+UINavigationController and that view controller wants to have the
+UINavigationController's navigationBar hidden as the UINavigationController's
+view translates in without hiding the navigationBar in the current
+view.
+
+Here is using `pushViewController:animated:`, notice how the navigationBar
+in the current view is hidden before the transition is finished.
+
+![Bad](https://raw.github.com/travisjeffery/UINavigationController-TRVSNavigationControllerTranslation/master/Bad.gif)
+
+Here is using `pushViewControllerWithNavigationControllerTranslation:`, now by
+using multiple layers we can keep the navigationBar visible in the current view
+until the transition completes.
+
+![Good](https://raw.github.com/travisjeffery/UINavigationController-TRVSNavigationControllerTranslation/master/Good.gif)
+
+MIT License, see the LICENSE file for details.
+
