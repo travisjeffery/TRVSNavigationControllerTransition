@@ -43,11 +43,11 @@ static NSTimeInterval const kTransitionDuration = .3f;
 
 - (void)pushViewControllerWithNavigationControllerTransition:(UIViewController *)viewController
 {
-    kTRVSCurrentLayer = [self _snapshotLayerWithTransform:CATransform3DIdentity];
+    kTRVSCurrentLayer = [self _layerSnapshotWithTransform:CATransform3DIdentity];
     
     [self pushViewController:viewController animated:NO];
     
-    kTRVSNextLayer = [self _snapshotLayerWithTransform:CATransform3DIdentity];
+    kTRVSNextLayer = [self _layerSnapshotWithTransform:CATransform3DIdentity];
     kTRVSNextLayer.frame = (CGRect){{CGRectGetWidth(self.view.bounds), CGRectGetMinY(self.view.bounds)}, self.view.bounds.size};
     
     [self.view.layer addSublayer:kTRVSCurrentLayer];
@@ -55,17 +55,17 @@ static NSTimeInterval const kTransitionDuration = .3f;
     
     [CATransaction flush];
     
-    [kTRVSCurrentLayer addAnimation:[self _translationAnimation:-CGRectGetWidth(self.view.bounds)] forKey:nil];
-    [kTRVSNextLayer addAnimation:[self _translationAnimation:-CGRectGetWidth(self.view.bounds)] forKey:nil];
+    [kTRVSCurrentLayer addAnimation:[self _animationWithTranslation:-CGRectGetWidth(self.view.bounds)] forKey:nil];
+    [kTRVSNextLayer addAnimation:[self _animationWithTranslation:-CGRectGetWidth(self.view.bounds)] forKey:nil];
 }
 
 - (void)popViewControllerWithNavigationControllerTransition
 {
-    kTRVSCurrentLayer = [self _snapshotLayerWithTransform:CATransform3DIdentity];
+    kTRVSCurrentLayer = [self _layerSnapshotWithTransform:CATransform3DIdentity];
     
     [self popViewControllerAnimated:NO];
     
-    kTRVSNextLayer = [self _snapshotLayerWithTransform:CATransform3DIdentity];
+    kTRVSNextLayer = [self _layerSnapshotWithTransform:CATransform3DIdentity];
     kTRVSNextLayer.frame = (CGRect){{-CGRectGetWidth(self.view.bounds), CGRectGetMinY(self.view.bounds)}, self.view.bounds.size};
     
     [self.view.layer addSublayer:kTRVSCurrentLayer];
@@ -73,23 +73,23 @@ static NSTimeInterval const kTransitionDuration = .3f;
     
     [CATransaction flush];
     
-    [kTRVSCurrentLayer addAnimation:[self _translationAnimation:CGRectGetWidth(self.view.bounds)] forKey:nil];
-    [kTRVSNextLayer addAnimation:[self _translationAnimation:CGRectGetWidth(self.view.bounds)] forKey:nil];
+    [kTRVSCurrentLayer addAnimation:[self _animationWithTranslation:CGRectGetWidth(self.view.bounds)] forKey:nil];
+    [kTRVSNextLayer addAnimation:[self _animationWithTranslation:CGRectGetWidth(self.view.bounds)] forKey:nil];
 }
 
-- (CABasicAnimation *)_translationAnimation:(CGFloat)tx
+- (CABasicAnimation *)_animationWithTranslation:(CGFloat)translation
 {
-    CABasicAnimation *translationX = [CABasicAnimation animationWithKeyPath:@"transform"];
-    translationX.toValue = [NSValue valueWithCATransform3D:CATransform3DTranslate(CATransform3DIdentity, tx, 0.f, 0.f)];
-    translationX.duration = kTransitionDuration;
-    translationX.delegate = [TRVSNavigationControllerTransitionAnimiationDelegate sharedDelegate];
-    translationX.removedOnCompletion = NO;
-    translationX.fillMode = kCAFillModeForwards;
-    translationX.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    return translationX;
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animation.toValue = [NSValue valueWithCATransform3D:CATransform3DTranslate(CATransform3DIdentity, translation, 0.f, 0.f)];
+    animation.duration = kTransitionDuration;
+    animation.delegate = [TRVSNavigationControllerTransitionAnimiationDelegate sharedDelegate];
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    return animation;
 }
 
-- (CALayer *)_snapshotLayerWithTransform:(CATransform3D)transform
+- (CALayer *)_layerSnapshotWithTransform:(CATransform3D)transform
 {
 	if (UIGraphicsBeginImageContextWithOptions){
         UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
