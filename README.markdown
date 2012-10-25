@@ -29,7 +29,8 @@ view. Make sure you link your binary with the QuartzCore.framework library.
 ### Example
 
 The left photo below is using `pushViewController:animated:`, notice how the navigation bar
-in the current view is hidden before the transition is finished. The right photo is using `pushViewControllerWithNavigationControllerTransition:`, now by
+in the current view is put out of view by making the navigation bar's origin y point -the navigation bar's height (so you can animate
+it in when the user scrolls) before the transition is finished. The right photo is using `pushViewControllerWithNavigationControllerTransition:`, now by
 using multiple layers we can keep the navigationBar visible in the current view
 until the transition completes. **Keep an eye on the navigation bar.**
 
