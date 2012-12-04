@@ -21,10 +21,7 @@ view controllers with an animated transition of the entire UINavigationControlle
 ### Usages
 
 One usage of this is when you push a view controller onto your
-UINavigationController and that view controller wants to have the
-UINavigationController's navigationBar hidden as the UINavigationController's
-view translates in without hiding the navigationBar in the current
-view. Make sure you link your binary with the QuartzCore.framework library.
+UINavigationController and that view controller wants to have its navigationBar drawn above its view so that you can translate it in.
 
 ### Example
 
