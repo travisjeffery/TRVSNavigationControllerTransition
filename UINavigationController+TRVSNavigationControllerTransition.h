@@ -11,4 +11,5 @@
 @interface UINavigationController (TRVSNavigationControllerTransition)
 - (void)pushViewControllerWithNavigationControllerTransition:(UIViewController *)viewController;
 - (void)popViewControllerWithNavigationControllerTransition;
+- (void)popToRootViewControllerWithNavigationControllerTransition;
 @end

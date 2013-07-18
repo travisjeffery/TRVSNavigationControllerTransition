@@ -61,9 +61,23 @@ static NSTimeInterval const kTransitionDuration = .3f;
 
 - (void)popViewControllerWithNavigationControllerTransition
 {
+    [self popViewControllerToRoot:NO];
+}
+
+-(void)popToRootViewControllerWithNavigationControllerTransition
+{
+    [self popViewControllerToRoot:YES];
+}
+
+- (void)popViewControllerToRoot:(BOOL)yesRoot
+{
     kTRVSCurrentLayer = [self _layerSnapshotWithTransform:CATransform3DIdentity];
     
-    [self popViewControllerAnimated:NO];
+    if (yesRoot) {
+        [self popToRootViewControllerAnimated:NO];
+    } else {
+        [self popViewControllerAnimated:NO];
+    }
     
     kTRVSNextLayer = [self _layerSnapshotWithTransform:CATransform3DIdentity];
     kTRVSNextLayer.frame = (CGRect){{-CGRectGetWidth(self.view.bounds), CGRectGetMinY(self.view.bounds)}, self.view.bounds.size};
