@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface UINavigationController (TRVSNavigationControllerTransition)
-- (void)pushViewControllerWithNavigationControllerTransition:(UIViewController *)viewController;
-- (void)popViewControllerWithNavigationControllerTransition;
+- (void)trvs_pushViewControllerWithNavigationControllerTransition:(UIViewController *)viewController;
+- (void)trvs_popViewControllerWithNavigationControllerTransition;
 @end

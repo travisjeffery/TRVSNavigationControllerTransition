@@ -59,7 +59,7 @@
 - (void)pushGoodAction:(id)sender
 {
     HidesNavigationBarViewController *viewController = [[HidesNavigationBarViewController alloc] init];
-    [self.navigationController pushViewControllerWithNavigationControllerTransition:viewController];
+    [self.navigationController trvs_pushViewControllerWithNavigationControllerTransition:viewController];
 }
 
 - (void)showNavigationBar:(id)sender
